@@ -1,0 +1,65 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    header, main {
+      border: 1px solid #ccc;
+      margin: 10px;
+      padding: 10px;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .header-nav {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      text-align: center;
+    }
+
+    .header-links li {
+      display: inline;
+      margin-right: 10px;
+    }
+
+    form {
+      margin-top: 20px;
+      text-align: center;
+    }
+  </style>
+  <title>Formulário para Nova Categoria</title>
+</head>
+<body>
+  <header class="header">
+    <nav class="header-nav">
+      <ul class="header-links">
+        <li><a href="{% url 'home-page' %}">Home</a></li>
+        <li><a href="{% url 'categories-form' %}">Cadastrar Categorias</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="main-content">
+    <form method="post" action="{% url 'categories-form' %}">
+      {% csrf_token %}
+      {{ form }}
+      <button type="submit">Salvar</button>
+    </form>
+  </main>
+</body>
+</html>

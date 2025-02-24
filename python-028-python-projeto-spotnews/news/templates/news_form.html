@@ -1,0 +1,117 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header.header {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .header-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .header-links a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+
+    form {
+      margin: 20px;
+      max-width: 600px;
+      width: 100%;
+      box-sizing: border-box;
+      background-color: #fff;
+      padding: 20px;
+      border: 1px solid #ccc;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    form label {
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    form input,
+    form textarea,
+    form select,
+    form button {
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+      box-sizing: border-box;
+    }
+
+    form button {
+      background-color: #333;
+      color: #fff;
+      border: none;
+      cursor: pointer;
+    }
+
+    form button:hover {
+      background-color: #555;
+    }
+  </style>
+  <title>Formulário para Nova Notícia</title>
+</head>
+<body>
+  <header class="header">
+    <ul class="header-links">
+      <li><a href="{% url 'home-page' %}">Home</a></li>
+      <li><a href="{% url 'categories-form' %}">Cadastrar Categorias</a></li>
+      <li><a href="{% url 'news-form' %}">Cadastrar Notícias</a></li>
+    </ul>
+  </header>
+
+  <form method="post" action="{% url 'news-form' %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    
+    <label for="id_title">Título</label>
+    <input type="text" name="title" id="id_title">
+    
+    <label for="id_content">Conteúdo</label>
+    <textarea name="content" id="id_content"></textarea>
+    
+    <label for="id_author">Autoria</label>
+    <select name="author" id="id_author">
+      {% for user in users %}
+        <option value="{{ user.id }}">{{ user.name }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="id_created_at">Criado em</label>
+    <input type="date" name="created_at" id="id_created_at">
+    
+    <label for="id_image">URL da Imagem</label>
+    <input type="file" name="image" id="id_image">
+
+    {% for category in categories %}
+      <label for="id_categories_{{ category.id }}">{{ category.name }}</label>
+      <input type="checkbox" name="categories" value="{{ category.id }}">
+    {% endfor %}    
+
+    <button type="submit">Salvar</button>
+  </form>
+</body>
+</html>

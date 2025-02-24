@@ -1,0 +1,86 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .header-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .header-links a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+
+    .news-container {
+      margin: 20px;
+      text-align: center;
+    }
+
+    .news-item {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      margin-bottom: 10px;
+      padding: 10px;
+      max-width: 600px;
+    }
+
+    .news-title {
+      margin-bottom: 5px;
+    }
+
+    .news-date {
+      color: #555;
+    }
+
+    .news-item img {
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+  <title>Página Inicial</title>
+</head>
+<body>
+  <header class="header">
+    <ul class="header-links">
+      <li><a href="{% url 'home-page' %}">Home</a></li>
+    </ul>
+  </header>
+
+  <div class="news-container">
+    {% for new in news %}
+      <a href="{% url 'news-details-page' new.id %}" class="news-item">
+        <h2 class="news-title">{{ new.title }}</h2>
+        <span class="news-date">{{ new.created_at|date:"d/m/Y" }}</span>
+        {% if new.image %}
+          <img src="{% static new.image.url %}" alt="{{ new.title }}">
+        {% endif %}
+      </a>
+    {% endfor %}
+  </div>
+</body>
+</html>

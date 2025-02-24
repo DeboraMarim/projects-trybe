@@ -1,0 +1,95 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="{% static 'css/style.css' %}">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    header {
+      background-color: #333;
+      color: #fff;
+      padding: 10px;
+      width: 100%;
+      text-align: center;
+    }
+
+    .header-links {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .header-links a {
+      color: #fff;
+      text-decoration: none;
+      margin: 0 10px;
+    }
+
+    .news-details-container {
+      margin: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .news-details-content {
+      background-color: #fff;
+      border: 1px solid #ccc;
+      padding: 20px;
+      max-width: 600px;
+      width: 100%;
+      box-sizing: border-box;
+      margin-bottom: 20px;
+    }
+
+    .news-title {
+      margin-bottom: 10px;
+    }
+
+    .news-categories, .news-author, .news-date {
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .news-details-container img {
+      max-width: 100%;
+      height: auto;
+      margin-bottom: 10px;
+    }
+  </style>
+  <title>Página de Detalhes da Notícia</title>
+</head>
+<body>
+  <header class="header">
+    <ul class="header-links">
+      <li><a href="{% url 'home-page' %}">Home</a></li>
+    </ul>
+  </header>
+
+  <div class="news-details-container">
+    <h1 class="news-title">{{ new.title }}</h1>
+    <div class="news-details-content">
+      <p class="news-content">{{ new.content }}</p>
+      {% for categ in category %}
+        <span class="news-categories">{{ categ }}</span>
+      {% endfor %}
+      <span class="news-author">{{ new.author }}</span>
+      {% if new.image %}
+        <img src="{% static new.image.url %}" alt="{{ new.title }}">
+      {% endif %}
+      <span class="news-date">{{ new.created_at|date:"d/m/Y" }}</span>
+    </div>
+  </div>
+</body>
+</html>
